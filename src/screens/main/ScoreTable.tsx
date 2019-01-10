@@ -5,6 +5,7 @@ import Notification from 'jojje-react-notification';
 import service from './service';
 
 interface Props {
+  gameId: string;
   entries: ScoreEntry[];
   /**
    * Whether to show a add new entry form.
@@ -34,7 +35,7 @@ export default class extends React.Component<Props, State> {
   }
 
   async addScoreEntryFromInput() {
-    let { inputScoreRef, inputHolderRef, state } = this;
+    let { inputScoreRef, inputHolderRef, props, state } = this;
 
 
     let score = inputScoreRef.value.trim();
@@ -49,8 +50,17 @@ export default class extends React.Component<Props, State> {
     }
 
     this.setState({
+      adddingEntry: true
+    });
+
+    let { gameId } = props;
+
+    await service.addScoreEntry(parseInt(score), holder, gameId);
+
+
+    this.setState({
       adddingEntry: false
-    })
+    });
   }
 
   /**

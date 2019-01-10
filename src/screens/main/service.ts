@@ -26,7 +26,7 @@ export default {
     let result = await backend.request('/score/' + id, 'delete')
   },
 
-  async addScoreEntry(score: number, holder: string) {
+  async addScoreEntry(score: number, holder: string, gameId: string) {
     await backend.request(`/score`, 'post', {
       score, holder
     });

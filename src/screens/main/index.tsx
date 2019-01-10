@@ -68,6 +68,7 @@ export default class MainScreen extends React.Component<any, State> {
                   </div>
                   <ScoreChart game={activeGame} />
                   <ScoreTable
+                    gameId={activeGame.id}
                     entries={activeGame.entries}
                     showAddNewEntry={true} />
                 </div>
