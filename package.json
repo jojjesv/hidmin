@@ -4,12 +4,12 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.6",
-    "jojje-react-notification": "file:../../npm/jojje-react-notification",
+    "jojje-react-notification": "git+https://gitlab.com/plasmaCheeseJoj/jojje-react-notification.git",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "3.1.0",
+    "react-scripts-ts": "^4.0.8",
     "recharts": "^1.3.4"
   },
   "scripts": {
@@ -28,5 +28,11 @@
     "@types/recharts": "^1.1.0",
     "node-sass": "^4.9.4",
     "typescript": "^3.1.3"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
