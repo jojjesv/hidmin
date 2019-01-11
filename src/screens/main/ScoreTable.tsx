@@ -2,15 +2,17 @@ import * as React from 'react';
 import Utils from 'src/Utils';
 import ScoreEntry from './ScoreEntry';
 import Notification from 'jojje-react-notification';
+import classNames from 'classnames';
 import service from './service';
 
 interface Props {
-  gameId: string;
+  gameSecret: string;
   entries: ScoreEntry[];
   /**
    * Whether to show a add new entry form.
    */
   showAddNewEntry?: boolean;
+  onAddedNewEntry?: (entry: ScoreEntry) => void;
 }
 
 class State {
@@ -53,14 +55,15 @@ export default class extends React.Component<Props, State> {
       adddingEntry: true
     });
 
-    let { gameId } = props;
+    let { gameSecret } = props;
 
-    await service.addScoreEntry(parseInt(score), holder, gameId);
-
+    let entry = await service.addScoreEntry(parseInt(score), holder, gameSecret);
 
     this.setState({
       adddingEntry: false
     });
+
+    this.onAddedScoreEntry(entry)
   }
 
   /**
@@ -91,8 +94,12 @@ export default class extends React.Component<Props, State> {
     return true;
   }
 
+  onAddedScoreEntry(entry: ScoreEntry) {
+    this.props.onAddedNewEntry(entry);
+  }
+
   render() {
-    let { props } = this;
+    let { props, state } = this;
 
     return (
       <table className="table is-fullwidth">
@@ -146,7 +153,12 @@ export default class extends React.Component<Props, State> {
                 <td className="column">
                 </td>
                 <td className="column is-2">
-                  <button className="button is-primary"
+                  <button
+                    className={classNames({
+                      "button is-primary": true,
+                      "loading": state.adddingEntry
+                    })}
+                    disabled={state.adddingEntry}
                     onClick={() => this.addScoreEntryFromInput()}>
                     Add entry
                   </button>

@@ -7,6 +7,7 @@ import Utils from 'src/Utils';
 import ScoreChart from './chart/ScoreChart';
 import ScoreTable from './ScoreTable';
 import './styles.scss';
+import ScoreEntry from './ScoreEntry';
 
 class State {
   fetchingGames: boolean = false;
@@ -41,6 +42,18 @@ export default class MainScreen extends React.Component<any, State> {
     })
   }
 
+  /**
+   * Adds a score entry to a game's list of entries and sorts the list by score descending.
+   */
+  addScoreEntry(entry: ScoreEntry, game: Game) {
+    let { entries } = game;
+    entries.push(entry);
+    entries.sort((a, b) => b.score - a.score);
+   
+    //  Re-render
+    this.forceUpdate();
+  }
+
   render() {
     let { state } = this;
 
@@ -68,8 +81,9 @@ export default class MainScreen extends React.Component<any, State> {
                   </div>
                   <ScoreChart game={activeGame} />
                   <ScoreTable
-                    gameId={activeGame.id}
+                    gameSecret={activeGame.secret}
                     entries={activeGame.entries}
+                    onAddedNewEntry={entry => this.addScoreEntry(entry, activeGame)}
                     showAddNewEntry={true} />
                 </div>
               )

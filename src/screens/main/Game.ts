@@ -8,4 +8,5 @@ export default class {
   id: any;
   title: string;
   entries: ScoreEntry[];
+  secret: string;
 }

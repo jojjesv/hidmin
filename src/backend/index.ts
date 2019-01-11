@@ -4,7 +4,7 @@ export const baseUrlProd = "http://localhost:8003/api";
  * Handles backend communication.
  */
 export default {
-  async request(path: string, method: 'get' | 'post' | 'put' | 'delete' = 'get', body?: object): Promise<object> {
+  async request(path: string, method: 'get' | 'post' | 'put' | 'delete' = 'get', body?: object): Promise<any> {
     if (!path.startsWith('/')) {
       path = '/' + path;
     }

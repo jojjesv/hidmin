@@ -1,5 +1,6 @@
 import Game from "./Game";
 import backend from "src/backend";
+import ScoreEntry from "./ScoreEntry";
 
 /**
  * @author Johan Svensson
@@ -26,9 +27,25 @@ export default {
     let result = await backend.request('/score/' + id, 'delete')
   },
 
-  async addScoreEntry(score: number, holder: string, gameId: string) {
-    await backend.request(`/score`, 'post', {
-      score, holder
+  async addScoreEntry(score: number, holder: string, gameSecret: string): Promise<ScoreEntry> {
+    let { token } = await backend.request(
+      '/game/token',
+      'post',
+      {
+        gameSecret
+      }
+    ) as any;
+
+    let { scoreId: id } = await backend.request(`/score?token=${token}`, 'post', {
+      score,
+      name: holder
     });
+
+    return {
+      date: new Date(),
+      id,
+      name: holder,
+      score
+    }
   }
 }
